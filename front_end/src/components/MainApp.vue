@@ -10,11 +10,22 @@ export default {
 
   },
   methods: {
+
+
     onSubmit() {
-      axios.post('http://localhost/esercizio_php-todo-list-json_22_06_2023/php-todo-list-json/back_end/newElement.php')
+
+      const url = 'http://localhost/esercizio_php-todo-list-json_22_06_2023/php-todo-list-json/back_end/newElement.php';
+      const data = this.newElement;
+      const headers = {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      };
+      axios.post(url, data, headers)
         .then(response => {
           this.newElement = response.data;
-        });
+
+          this.newElement = "";
+        })
+        .catch(error => console.error("error", error));
 
     }
 
@@ -33,12 +44,16 @@ export default {
 
 
 <template>
-  <div class="container_fluid bg-dark">
+  <div class="container_fluid bg-dark ">
     <div class="container text-center">
       <h1 style="color: #6d757d ;">Todo List</h1>
       <div class="card bg ">
         <div class="card-body">
-          <h3>{{ newElement }}</h3>
+          <ul>
+            <li v-for="(element, index) in elements" :key="index">
+              {{ element.element }}
+            </li>
+          </ul>
         </div>
         <div class="card-footer">
           <form @submit.prevent="onSubmit">
