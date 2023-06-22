@@ -15,7 +15,7 @@ export default {
     onSubmit() {
 
       const url = 'http://localhost/esercizio_php-todo-list-json_22_06_2023/php-todo-list-json/back_end/newElement.php';
-      const data = this.newElement;
+      const data = { value: this.newElement };
       const headers = {
         headers: { 'Content-Type': 'multipart/form-data' }
       };
@@ -27,16 +27,21 @@ export default {
         })
         .catch(error => console.error("error", error));
 
+      axios.get('http://localhost/esercizio_php-todo-list-json_22_06_2023/php-todo-list-json/back_end/index.php')
+        .then(response => {
+          this.elements = response.data;
+        }).catch(error => console.error("error", error));
+
     }
 
   },
-  mounted() {
+  // mounted() {
 
-    axios.get('http://localhost/esercizio_php-todo-list-json_22_06_2023/php-todo-list-json/back_end/index.php')
-      .then(response => {
-        this.elements = response.data;
-      });
-  }
+  //   axios.get('http://localhost/esercizio_php-todo-list-json_22_06_2023/php-todo-list-json/back_end/index.php')
+  //     .then(response => {
+  //       this.elements = response.data;
+  //     }).catch(error => console.error("error", error));
+  // }
 }
 
 </script>
@@ -51,7 +56,7 @@ export default {
         <div class="card-body">
           <ul>
             <li v-for="(element, index) in elements" :key="index">
-              {{ element.element }}
+              {{ element }}
             </li>
           </ul>
         </div>

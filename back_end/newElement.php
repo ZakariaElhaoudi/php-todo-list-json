@@ -6,7 +6,7 @@ header("Access-Control-Allow-Headers: X-Requested-With");
 header('Content-Type: application/json');
 
 $dataStr = file_get_contents('store.json');
-$newElement = $_POST;
+$newElement = $_POST['value'] ?? null;
 $data = json_decode($dataStr);
 
 $data[] = $newElement;
